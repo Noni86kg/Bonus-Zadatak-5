@@ -32,6 +32,10 @@ function displayPhotos() {
     imagesLoaded = 0;
     totalImages = photosArray.length;
     photosArray.forEach((photo) => {
+      console.log(photo)
+      const div = document.createElement('div');
+      div.classList.add('card');
+
         const item = document.createElement('a');
         setAttributes(item, {
             href: photo.links.html,
@@ -43,9 +47,20 @@ function displayPhotos() {
             alt: photo.alt_description,
             title: photo.alt_description,
           });
+          const textHTML = document.createElement('div');
+          textHTML.classList.add('text');
+          const cardText = `    
+          <h2>${photo.alt_description ? photo.alt_description : ''}</h2>
+          <h4>${photo.user.username ? "Photography by" + photo.user.username  : ''}</h4>
+          <p>${photo.exif.make ? photo.exif.make : ""} ${photo.exif.model ? photo.exif.model : ""}<br>
+          ${photo.location.title ? "Location:" + photo.location.title : ''} </p>`;
+          textHTML.innerHTML = cardText;
+
           img.addEventListener('load', imageLoaded);
           item.appendChild(img);
-          imageContainer.appendChild(item);
+          div.appendChild(item);
+          div.appendChild(textHTML);
+          imageContainer.appendChild(div);
     })
 }
 
@@ -72,7 +87,11 @@ getPhotos();
 //Grid / list mode
 list.addEventListener('click', ()=> {
     imageContainer.classList.remove('active');
+    grid.style.color = "gray";
+    list.style.color = "white";
 })
 grid.addEventListener('click', ()=> {
     imageContainer.classList.add('active');
+    grid.style.color = "white";
+    list.style.color = "gray";
 })
