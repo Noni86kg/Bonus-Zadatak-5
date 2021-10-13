@@ -38,20 +38,20 @@ function displayPhotos() {
 
         const item = document.createElement('a');
         setAttributes(item, {
-            href: photo.links.html,
+            href: photo.urls.regular ? photo.urls.regular : '',
             target: '_blank',
-          });
+          });           
         const img = document.createElement('img');
         setAttributes(img, {
             src: photo.urls.regular,
             alt: photo.alt_description,
-            title: photo.alt_description,
+            title: photo.alt_description ? photo.alt_description : photo.description ? photo.description : '',
           });
           const textHTML = document.createElement('div');
           textHTML.classList.add('text');
           const cardText = `    
-          <h2>${photo.alt_description ? photo.alt_description : ''}</h2>
-          <h4>${photo.user.username ? "Photography by" + photo.user.username  : ''}</h4>
+          <h2><a href="${photo.links.html}" target="_blank">${photo.alt_description ? photo.alt_description : ''}</a></h2>
+          <h4><a href="${photo.user.portfolio_url ? photo.user.portfolio_url : '' }" target="_blank">${photo.user.username ? "Photography by " + photo.user.username  : ''}</a></h4>
           <p>${photo.exif.make ? photo.exif.make : ""} ${photo.exif.model ? photo.exif.model : ""}<br>
           ${photo.location.title ? "Location:" + photo.location.title : ''} </p>`;
           textHTML.innerHTML = cardText;
